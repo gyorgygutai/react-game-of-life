@@ -24,9 +24,7 @@ const countLiveNeighbours = (grid, y, x) => {
 }
 
 const isAliveNext = (isAlive, numLiveNeighbours) => {
-  return isAlive
-    ? numLiveNeighbours === 2 || numLiveNeighbours === 3
-    : numLiveNeighbours === 3
+  return numLiveNeighbours === 3 || (isAlive && numLiveNeighbours === 2)
 }
 
 export const generateGrid = (width, height) => (

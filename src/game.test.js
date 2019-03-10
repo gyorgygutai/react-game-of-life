@@ -1,4 +1,4 @@
-import { tick } from './gameOfLife'
+import { tick } from './game'
 
 it('is a function', () => {
   expect(typeof tick).toEqual('function')
