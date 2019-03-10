@@ -1,10 +1,12 @@
 {
-  "name": "game-of-life",
+  "name": "react-game-of-life",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "konva": "^3.1.7",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-konva": "^16.8.4",
     "react-scripts": "2.1.8"
   },
   "scripts": {
