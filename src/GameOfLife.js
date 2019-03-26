@@ -1,70 +1,57 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import { number, array } from 'prop-types'
 import { tick } from './game'
 import { Stage, Layer, Rect } from 'react-konva'
 import Konva from 'konva'
 
-// TODO try react hooks
+const GameOfLife = ({ width, height, speed, initialGrid }) => {
+  const [grid, setGrid] = useState(initialGrid)
 
-class GameOfLife extends Component {
-  constructor(props) {
-    super(props)
+  const update = () => setGrid(tick(grid))
 
-    this.state = {
-      grid: props.initialGrid
+  useEffect(() => {
+    const timerId = setTimeout(update, speed)
+
+    return () => {
+      clearTimeout(timerId)
     }
-  }
+  })
 
-  componentDidMount() {
-    setTimeout(this.update, this.props.speed)
-  }
+  const { innerWidth, innerHeight } = window
+  const stageWidth = innerWidth < innerHeight ? innerWidth : innerHeight
+  const stageHeight = innerHeight
 
-  update = (onEnd) => {
-    this.setState(({ grid }) => ({
-      grid: tick(grid)
-    }), () => setTimeout(this.update, this.props.speed))
-  }
+  const cellWidth = stageWidth / width
+  const cellHeight = innerHeight / height
 
-  render() {
-    const { grid } = this.state
-    const { width, height } = this.props
-    const { innerWidth, innerHeight } = window
-
-    const stageWidth = innerWidth < innerHeight ? innerWidth : innerHeight
-    const stageHeight = innerHeight
-
-    const cellWidth = stageWidth / width
-    const cellHeight = innerHeight / height
-
-    return (
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center'
-      }}>
-        <Stage
-          width={stageWidth}
-          height={stageHeight}
-        >
-          <Layer>
-            {grid.map((row, y) => (
-              row.map((isAlive, x) => (
-                <Rect
-                  key={`${y}${x}`}
-                  x={x * cellWidth}
-                  y={y * cellHeight}
-                  width={cellWidth}
-                  height={cellHeight}
-                  stroke="rgba(0, 0, 0, .009)"
-                  strokeWidth={1}
-                  fill={isAlive && Konva.Util.getRandomColor()}
-                />
-              ))
-            ))}
-          </Layer>
-        </Stage>
-      </div>
-    )
-  }
+  return (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center'
+    }}>
+      <Stage
+        width={stageWidth}
+        height={stageHeight}
+      >
+        <Layer>
+          {grid.map((row, y) => (
+            row.map((isAlive, x) => (
+              <Rect
+                key={`${y}${x}`}
+                x={x * cellWidth}
+                y={y * cellHeight}
+                width={cellWidth}
+                height={cellHeight}
+                stroke="rgba(0, 0, 0, .009)"
+                strokeWidth={1}
+                fill={isAlive && Konva.Util.getRandomColor()}
+              />
+            ))
+          ))}
+        </Layer>
+      </Stage>
+    </div>
+  )
 }
 
 GameOfLife.propTypes = {

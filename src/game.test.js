@@ -4,7 +4,7 @@ it('is a function', () => {
   expect(typeof tick).toEqual('function')
 })
 
-it('test 1', () => {
+it('iteration 1', () => {
   expect(tick([
     [0, 0, 0, 0, 0],
     [0, 1, 1, 1, 0],
@@ -16,7 +16,7 @@ it('test 1', () => {
   ])
 })
 
-it('test 2', () => {
+it('iteration 2', () => {
   expect(tick([
     [0, 0, 1, 0, 0],
     [0, 0, 1, 0, 0],

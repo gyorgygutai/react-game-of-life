@@ -15,11 +15,11 @@ const neighbourPositions = [
   [1, -1], [1, 0], [1, 1]
 ]
 
-const countLiveNeighbours = (grid, y, x) => {
-  return neighbourPositions.reduce((count, coord) => {
-    const row = grid[y + coord[0]]
+const countLiveNeighbours = (grid, startY, startX) => {
+  return neighbourPositions.reduce((count, [y, x]) => {
+    const row = grid[startY + y]
 
-    return count + (row && row[x + coord[1]] || 0)
+    return count + (row && row[startX + x] || 0)
   }, 0)
 }
 
@@ -29,7 +29,7 @@ const isAliveNext = (isAlive, numLiveNeighbours) => {
 
 export const generateGrid = (width, height) => (
   new Array(height)
-    .fill([])
+    .fill()
     .map(() => (
       new Array(width)
         .fill(0)
